@@ -3,7 +3,9 @@
   padding: 0;
   margin: 0;
 }
-
+:root {
+  --main-orange: orangered;
+}
 body {
   font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
@@ -24,7 +26,7 @@ body {
   border-radius: .5rem;
 }
 .form .submit {
-  background-color: orangered;
+  background-color: var(--main-orange);
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -45,12 +47,23 @@ body {
   width: 16rem;
   padding: .3rem;
   border-radius: .4rem;
+  display: flex;
+  justify-content: space-between;
+}
+.list-parent .list .remove-ele {
+  padding: .25rem;
+  font-size: .7rem;
+  font-weight: bolder;
+  color: white;
+  background-color: #ee0702;
+  border-radius: .2rem;
+  cursor: pointer;
 }
 
 .button {
   display: block;
   width: fit-content;
-  background-color: #e70404;
+  background-color: var(--main-orange);
   color: white;
   padding:.3rem;
   margin: auto;
