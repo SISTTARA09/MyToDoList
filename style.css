@@ -60,7 +60,7 @@ body {
   cursor: pointer;
 }
 
-.button {
+.clearBtn {
   display: block;
   width: fit-content;
   background-color: var(--main-orange);

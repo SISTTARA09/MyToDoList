@@ -17,7 +17,7 @@ form.addEventListener('submit', ev => {
   toDoArr.unshift(obj);
   localStorage.setItem('key', JSON.stringify(toDoArr));
 })
-let button = document.createElement('button');
+let clearBtn = document.createElement('clearBtn');
 // LET THE ARRAY RETURN THE VALUE FROM THE LOCALSTORAGE
 let keyItem = JSON.parse(localStorage.getItem('key'));
 if (localStorage.getItem('key')) {
@@ -25,24 +25,27 @@ if (localStorage.getItem('key')) {
   toDoArr.forEach(ele => {
     let list = document.createElement('p');
     list.setAttribute('class', 'list');
-    let removeEle = document.createElement('span');
-    removeEle.setAttribute('class', 'remove-ele');
-    removeEle.textContent = "remove";
+    let removeBtn = document.createElement('span');
+    removeBtn.setAttribute('class', 'remove-ele');
+    removeBtn.textContent = "remove";
     list.textContent = ele.title.toUpperCase();
-    list.appendChild(removeEle);
+    list.appendChild(removeBtn);
     listParent.append(list);
     // WORK WITH REMOVE ITEM.
-    removeEle.addEventListener('click', ev => {
+    removeBtn.addEventListener('click', ev => {
       let target = ev.target;
       let list = target.parentNode;
       let listContent = list.textContent.replace('remove', '');
-      cl(listContent);
-      cl(toDoArr[0].id);
-      toDoArr[0] = '';
+      let element = toDoArr.filter(ele => {
+        return ele.title.toUpperCase() == listContent;
+      })
+      toDoArr.splice(toDoArr.indexOf(...element), 1);
+      localStorage.setItem('key', JSON.stringify(toDoArr));
+      location.reload();
     })
   });
   listParent.style = 'display: flex;';
-  listParent.appendChild(button);
+  listParent.appendChild(clearBtn);
 }
 window.onload = (e) => {
   input.focus();
@@ -55,7 +58,6 @@ let confirmButton = document.getElementById('confirmButton');
 let cancelButton = document.getElementById('cancelButton');
 promptInput.addEventListener('change', e => {
   if (promptInput.value === 'CLEAR') {
-    cl(true)
     buttons.addEventListener('click', (ev) => {
       ev.preventDefault();
       let target = ev.target;
@@ -67,9 +69,13 @@ promptInput.addEventListener('change', e => {
     buttons.addEventListener('click', (ev) => {(ev.target === confirmButton) ? location.reload() : location.reload()},true)
   }
 })
-button.setAttribute('class', 'button')
-button.textContent = 'clear';
-button.onclick = function (e) {
+if (!toDoArr[0]) {
+  clearBtn.style.display = 'none';
+  listParent.style.display = 'none'
+}
+clearBtn.setAttribute('class', 'clearBtn')
+clearBtn.textContent = 'clear';
+clearBtn.onclick = function (e) {
   e.preventDefault();
   prompt.style = 'display: flex;'
 }
